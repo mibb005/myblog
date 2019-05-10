@@ -1,7 +1,7 @@
 ---
 title: docker ubuntu 安装
 date: 2019-05-10 11:17:28
-tags:
+tags: docker
 ---
 
 # 安装
