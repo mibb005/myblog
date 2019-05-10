@@ -23,3 +23,13 @@ sudo systemctl enable docker
 sudo gpasswd -a $USER docker     #将登陆用户加入到docker用户组中
 newgrp docker     #更新用户组
 ```
+
+# 运行交互式的容器
+
+```
+docker run -i -t microsoft/dotnet  /bin/bash
+各个参数解析：
+-t:在新容器内指定一个伪终端或终端。
+-i:允许你对容器内的标准输入 (STDIN) 进行交互。
+ctrl + D 退出
+```
