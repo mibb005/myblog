@@ -1,15 +1,15 @@
 ---
 title: GitLab持续集成环境 windows版
-date: 2019-05-13 15:14:46
 tags: gitlab
+date: 2019-05-13 15:14:46
 ---
 
 # 搭建环境
 
 ## GitLab-Runner下载
-···
+```
 https://gitlab-ci-multi-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-ci-multi-runner-windows-amd64.exe
-···
+```
 
 ##  GitLab查看项目的Runners
 
@@ -61,4 +61,3 @@ job:
   - tags
 
 ```
-

@@ -1,9 +1,10 @@
 ---
 title: docker.core
-date: 2019-05-14 14:33:19
 tags:
- - docker
- - core
+  - docker
+  - core
+author: mibb005
+date: 2019-05-14 14:33:00
 ---
 
 # 拉取microsoft/dotnet镜像
