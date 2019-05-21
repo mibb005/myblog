@@ -22,6 +22,6 @@ docker pull nextcloud
 # 启动
 
 ```
-docker run -d --restart=always --name nextcloud -p 8080:80 -v $PWD/docker/nextcloud:/data nextcloud
+docker run -d --restart=always --name nextcloud -p 8080:80 -v $PWD/docker/nextcloud:/var/www/html/data nextcloud
 ```
 
