@@ -22,6 +22,12 @@ docker pull nextcloud
 # 启动
 
 ```
-docker run -d --restart=always --name nextcloud -p 8080:80 -v $PWD/docker/nextcloud:/var/www/html/data nextcloud
+docker run -d --restart=always --name nextcloud -p 8080:80 -v $PWD/docker/nextcloud:/var/www/html nextcloud
+```
+
+# 修改文件夹访问权限
+
+```
+sudo chown -R www-data:pi nextcloud
 ```
 
