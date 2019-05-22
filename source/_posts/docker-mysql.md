@@ -20,7 +20,9 @@ docker run -p 3306:3306 --name mymysql -v $PWD/conf:/etc/mysql/conf.d -v $PWD/lo
 * -e MYSQL_ROOT_PASSWORD=123456：初始化 root 用户的密码。
 
 
-# 解决 错误 ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client
+# 解决node 连接mysql错误
+
+ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client
 
 ```
 docker exec -it mysql(这里的mysql是指你启动时的容器名称) bash
