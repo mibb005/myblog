@@ -9,13 +9,13 @@ tags:
 
 # 问题
 
-Nginx以 `HLS+m3u8`方式搭建的流媒体报`https://www.***.com/crossdomain.xml`找不到
+`Nginx`以`HLS+m3u8`方式搭建的流媒体报`https://www.***.com/crossdomain.xml`找不到
 
 <!---more-->
 
 # 解决方案
 
-在跨域的网站根目录放crossdomain.xml文件，下面是允许所有的网站（一般不采取这样的方式，我只是方便调试）均可以跨越访问资源配置如下：
+在跨域的网站根目录放`crossdomain.xml`文件，下面是允许所有的网站（一般不采取这样的方式，我只是方便调试）均可以跨越访问资源配置如下：
 
 ```
  <?xml version="1.0"?>
