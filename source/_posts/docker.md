@@ -7,6 +7,8 @@ tags: docker
 
 开发环境大多使用的的是windows系统，服务器运行环境一般采用Linux系统，这时候生成镜像时用到远程连接Docker服务。
 
+<!---more-->
+
 ## 开启Docker远程
 
 如果只是临时使用远程docker，使用以下命令：

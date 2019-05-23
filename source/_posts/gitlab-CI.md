@@ -10,6 +10,7 @@ date: 2019-05-13 15:14:46
 ```
 https://gitlab-ci-multi-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-ci-multi-runner-windows-amd64.exe
 ```
+<!---more-->
 
 ##  GitLab查看项目的Runners
 

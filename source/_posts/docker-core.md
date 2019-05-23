@@ -13,6 +13,8 @@ date: 2019-05-14 14:33:00
 ocker pull microsoft/dotnet
 ```
 
+<!---more-->
+
 # 运行镜像
 
 使用`docker run <image>`可以启动镜像，通过指定参数`-it`以交互模式（进入容器内部）启动。依次执行以下命令：

@@ -11,6 +11,8 @@ tags:
 console.log("%c需要输出的信息 ", "css 代码");
 ```
 
+<!---more-->
+
 # 示例
 
 1. 3D Text:

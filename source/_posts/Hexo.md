@@ -10,6 +10,8 @@ categories: hexo
 $ npm install -g hexo-cli
 ```
 
+<!---more-->
+
 依旧用hexo -v查看一下版本
 
 至此就全部安装完了。
