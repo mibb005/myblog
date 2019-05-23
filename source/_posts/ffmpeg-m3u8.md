@@ -3,6 +3,7 @@ title: ffmpeg视频m3u8切片
 date: 2019-05-23 10:10:57
 tags:
  - ffmpeg
+ - m3u8
 ---
 
 # 首先将视频文件转为视频编码h.264，音频编码aac格式的mp4文件 
@@ -34,6 +35,12 @@ ffmpeg -i out.mp4 -c copy -bsf h264_mp4toannexb output.ts
 ```
 ffmpeg -i output.ts -c copy -map 0 -f segment -segment_list playlist.m3u8 -segment_time 5 output%03d.ts  
 #其中segment 就是切片，-segment_time表示隔几秒进行切一个文件
+```
+
+# m3u8视频文件下载
+
+```
+ffmpeg -i https://dbx3.tyswmp.com/ppvod/0B1CBC90EC065FB92F2ECB5D9E03B4A5.m3u8 Vid.mp4
 ```
 
 
