@@ -1,13 +1,11 @@
 ---
-title: Shadow
+title: Shadowsocks原理
 date: 2019-06-12 15:47:03
 tags:
  - node
  - 代理
  - Shadowsocks
 ---
-
-# Shadowsocks原理
 
 > 本文将教你从0写一个Shadowsocks，无需任何基础，读完本文你就能完成一个轻量级、高性能的 Shadowsocks 代替品。
 > 我们暂且把最终完成的项目叫做 Lightsocks，如果你很急切地想看到结果，可以先体验本文最终完成的项目 Lightsocks ，也可以下载阅读源码。
