@@ -10,6 +10,8 @@ tags:
 `Flex` 是 `Flexible Box` 的缩写，意为"弹性布局"，用来为盒状模型提供最大的灵活性。
 任何一个容器都可以指定为 `Flex` 布局。
 
+<!---more-->
+
 ```css
 .box{
   display: flex;
@@ -138,7 +140,7 @@ space-around：每个项目两侧的间隔相等。所以，项目之间的间�
 
 ## align-items属性
 
-align-items属性定义项目在交叉轴上如何对齐。
+`align-items`属性定义项目在交叉轴上如何对齐。
 
 ```css
 .box {
