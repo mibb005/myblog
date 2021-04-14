@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="vscode作为微软推出的现代编辑器已经在GitHub上开源了。用过vscode的人都纷纷表示速度极快，秒杀同为使用Electron架构的Atom。这次我们从源码级别来剖析为何vscode快速，高效。 ElectronElectron 是基于 Node.js 和 Chromium 的跨平台桌面应用开发框架。使用 JavaScipt，HTML，CSS 真正将 Node.js 带到了前端。Electr">
+<meta name="keywords" content="vscode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vscode源码剖析">
+<meta property="og:url" content="http://yoursite.com/2019/06/25/vs-code/index.html">
+<meta property="og:site_name" content="mibb005">
+<meta property="og:description" content="vscode作为微软推出的现代编辑器已经在GitHub上开源了。用过vscode的人都纷纷表示速度极快，秒杀同为使用Electron架构的Atom。这次我们从源码级别来剖析为何vscode快速，高效。 ElectronElectron 是基于 Node.js 和 Chromium 的跨平台桌面应用开发框架。使用 JavaScipt，HTML，CSS 真正将 Node.js 带到了前端。Electr">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/06/25/vs-code/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/25/vs-code/2.png">
+<meta property="og:updated_time" content="2021-04-14T03:14:12.203Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vscode源码剖析">
+<meta name="twitter:description" content="vscode作为微软推出的现代编辑器已经在GitHub上开源了。用过vscode的人都纷纷表示速度极快，秒杀同为使用Electron架构的Atom。这次我们从源码级别来剖析为何vscode快速，高效。 ElectronElectron 是基于 Node.js 和 Chromium 的跨平台桌面应用开发框架。使用 JavaScipt，HTML，CSS 真正将 Node.js 带到了前端。Electr">
+<meta name="twitter:image" content="http://yoursite.com/2019/06/25/vs-code/1.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/06/25/vs-code/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>vscode源码剖析 | mibb005</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">mibb005</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/25/vs-code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mibb005">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/ss.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mibb005">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vscode源码剖析
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-25 15:27:22" itemprop="dateCreated datePublished" datetime="2019-06-25T15:27:22+08:00">2019-06-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-04-14 11:14:12" itemprop="dateModified" datetime="2021-04-14T11:14:12+08:00">2021-04-14</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/06/25/vs-code/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/06/25/vs-code/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>vscode作为微软推出的现代编辑器已经在GitHub上<a href="https://github.com/Microsoft/vscode" target="_blank" rel="noopener">开源</a>了。用过vscode的人都纷纷表示速度极快，秒杀同为使用<a href="https://github.com/electron/electron" target="_blank" rel="noopener">Electron</a>架构的<a href="https://github.com/atom/atom" target="_blank" rel="noopener">Atom</a>。这次我们从源码级别来剖析为何vscode快速，高效。</p>
+<h1 id="Electron"><a href="#Electron" class="headerlink" title="Electron"></a>Electron</h1><p><code>Electron</code> 是基于 <code>Node.js</code> 和 <code>Chromium</code> 的跨平台桌面应用开发框架。使用 <code>JavaScipt，HTML，CSS</code> 真正将 <code>Node.js</code> 带到了前端。<code>Electron</code> 通过 <code>BrowserWindow</code> 可以创建一个本地窗口，并加载一个<code>HTML</code>文档，<code>BrowserWindow</code>中的内容就是一个浏览器窗口，不仅能创建<code>DOM</code>元素，同时能使用任意的<code>Node</code>模块，并且还可以通过<code>IPC</code>与主进程通讯。</p>
+<h1 id="多进程"><a href="#多进程" class="headerlink" title="多进程"></a>多进程</h1><p>每一个 <code>Electron</code> 应用都对应一个主进程(main process)， 主进程通过<code>BrowserWindow</code>创建的每个本地窗口对应一个渲染进程(renderer process)。</p>
+<p><img src="/2019/06/25/vs-code/1.png" alt="图片alt"></p>
+<h1 id="主进程"><a href="#主进程" class="headerlink" title="主进程"></a>主进程</h1><p>vscode的主进程主要负责创建窗口和菜单，生命周期管理，自动更新等与系统相关的功能。</p>
+<h1 id="渲染进程"><a href="#渲染进程" class="headerlink" title="渲染进程"></a>渲染进程</h1><p>绝大多数代码都是运行在渲染进程中的，渲染进程负责界面的显示，响应用户操作。前面说到在浏览器中也可以使用Node模块，渲染进程还通过Node创建了一个插件子进程，负责插件的初始化。另外渲染进程还可以创建Worker执行一些复杂的计算，比如markdown的解析。</p>
+<h1 id="插件进程"><a href="#插件进程" class="headerlink" title="插件进程"></a>插件进程</h1><p>每一个渲染进程同时也对应一个插件进程，插件运行在单独的进程不会对渲染进程造成影响，这也是vscode比atom要快的原因。Atom中插件是直接运行在渲染进程中的，所以当插件很多的时候会卡。同时又由于vscode的插件运行在一个普通的Node进程中，所以对UI的操作能力是比较弱的，这点不及Atom。</p>
+<h1 id="VSCode-Loader"><a href="#VSCode-Loader" class="headerlink" title="VSCode Loader"></a>VSCode Loader</h1><p>VSCode Loader是类似于 RequireJS 的一个异步加载模块(AMD)。所有的TypeScript源码都被编译成了使用AMD规范的js文件，使用时通过这个loader加载。</p>
+<p>虽然主进程(Node进程)是使用CommonJS规范的，但是在浏览器中的代码加载是异步的，所以使用AMD是没有争议的。在vscode中的一些核心代码，基本库都是用TypeScript编写的，也会被编译成AMD规范的js，这些基本代码也会被主进程用到，所以主进程里面也用到了这个loader。同理，插件进程和Worker都会使用这个loader加载代码。</p>
+<p>VSCode Loader不仅实现了类似RequireJS的模块加载功能，还附带几个插件可以加载css(css.js)和文档，以及实现多语言。</p>
+<h1 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h1><p>vscode的主要目录结构如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">├── build                 // gulp打包编译相关脚本</span><br><span class="line">├── node_modules          // 依赖模块</span><br><span class="line">├── src                   // 源代码和素材(ts,js,css,svg,html等)</span><br><span class="line">│    ├── typings           // 常用模块定义</span><br><span class="line">│    ├── vs</span><br><span class="line">│    │    ├── base         // 核心模块，常用库和基本组件</span><br><span class="line">│    │    ├── editor       // 编辑器模块</span><br><span class="line">│    │    ├── languages    // 默认编辑器语言支持</span><br><span class="line">│    │    ├── platform     // 核心功能接口定义和基本实现</span><br><span class="line">│    │    ├── workbench    // 业务逻辑功能实现</span><br><span class="line">│    │    ├── loader.js    // vscode loader</span><br><span class="line">│    │    └── vscode.d.ts  // 插件API定义</span><br><span class="line">│    └── main.js          // 主进程入口</span><br><span class="line">├── gulpfile.js          // gulp打包编译入口</span><br><span class="line">├── product.json         // 产品描述文件</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
+<h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><p>base包封装了大量API，实现常用功能。在vscode中目录结构都是都是按照browser，common，node，electron的方式划分的。</p>
+<p>browser 实现浏览器相关的功能。<br>common 实现不依赖node模块的基本功能。<br>node 实现需要node模块支持的功能，比如文件操作。<br>electron 实现需要electron api的功能，比如ipc通讯。</p>
+<h2 id="browser"><a href="#browser" class="headerlink" title="browser"></a>browser</h2><p>browser中实现了一个简单的UI库，包括 Button，CheckBox，List，Scrollbar等常用组件。并且封装了一套类似JQuery的DOM操作API(参见 dom.ts 和 builder.ts)。</p>
+<h2 id="common"><a href="#common" class="headerlink" title="common"></a>common</h2><p>common包中封装了大量实用工具类。如</p>
+<p>arrays.ts，strings.ts，objects.ts 封装了一套类似underscore的api。<br>uri.ts 和 paths.ts 实现了路径解析功能。<br>winjs.base.js 实现了一个功能强大的Promise。<br>另外还有很多其他的工具类，每一个模块的耦合度都很低，基本都可以单独拿出来用，学习起来也和容易。这里就不一一介绍了。</p>
+<h2 id="node"><a href="#node" class="headerlink" title="node"></a>node</h2><p>node包中封装了一些node实现的功能。如</p>
+<p>extfs.ts 和 pfs.ts 封装了文件操作相关的api。<br>request.ts 封装了网络请求的api，能方便的发送网络请求，加载json，下载文件。<br>service.cp.ts 和 service.net.ts 封装了socket和进程通讯的api。<br>zip.ts 封装了解压缩文件的操作</p>
+<p>##parts</p>
+<p>这个包额外定义了一些复杂的UI组件，tree 和 quickopen。</p>
+<h2 id="editor-and-language"><a href="#editor-and-language" class="headerlink" title="editor and language"></a>editor and language</h2><p>本篇主要了解vscode基本框架的结构，这两包作为编辑器功能的主要实现，这里面的逻辑太复杂就不细说了。</p>
+<h2 id="platform-and-workbench"><a href="#platform-and-workbench" class="headerlink" title="platform and workbench"></a>platform and workbench</h2><p><code>vscode</code>中基本所有的具体功能实现代码都在这两包中。<code>platform</code>主要定义了一些服务的接口和简单实现，<code>workbench</code>则实现了这些接口，并且创建了一个工作台，构建了一个完整界面结构。</p>
+<hr>
+<p>下面从程序入口开始，从源码一步一步来看<code>vscode</code>是怎样运行起来的。</p>
+<h1 id="启动主进程"><a href="#启动主进程" class="headerlink" title="启动主进程"></a>启动主进程</h1><p><code>Eletron</code>通过<code>package.json</code>中的<code>main</code>字段来定义应用入口。<code>main.js</code> 是<code>vscode</code>的入口。</p>
+<h2 id="初始化loader"><a href="#初始化loader" class="headerlink" title="初始化loader"></a>初始化loader</h2><p>这个模块是一个壳，主要解析多语言配置，然后初始化loader，通过loader加载 main.ts。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Load our code once ready</span></span><br><span class="line">app.once(<span class="string">'ready'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> nlsConfig = getNLSConfiguration();</span><br><span class="line">    process.env[<span class="string">'VSCODE_NLS_CONFIG'</span>] = <span class="built_in">JSON</span>.stringify(nlsConfig);</span><br><span class="line">    <span class="built_in">require</span>(<span class="string">'./bootstrap-amd'</span>).bootstrap(<span class="string">'vs/workbench/electron-main/main'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这里的 bootstrap-amd.js 负责创建一个loader，实现异步加载。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">loader.config(&#123;</span><br><span class="line">    baseUrl: uriFromPath(path.join(__dirname)),</span><br><span class="line">    catchError: <span class="literal">true</span>,</span><br><span class="line">    nodeRequire: <span class="built_in">require</span>,</span><br><span class="line">    nodeMain: __filename,</span><br><span class="line">    <span class="string">'vs/nls'</span>: nlsConfig</span><br><span class="line">&#125;);</span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">exports.bootstrap = <span class="function"><span class="keyword">function</span> (<span class="params">entrypoint</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!entrypoint) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    loader([entrypoint], <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123; <span class="built_in">console</span>.error(err); &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="解析命令行参数"><a href="#解析命令行参数" class="headerlink" title="解析命令行参数"></a>解析命令行参数</h2><p>在 main.ts 中依赖一个 env 的模块</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> env = <span class="built_in">require</span>(<span class="string">'vs/workbench/electron-main/env'</span>);</span><br></pre></td></tr></table></figure>
+<p>该模块负责命令行参数的解析，以及读取 package.json 和 product.json 保存软件的一些基本信息，主要变量如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 是否是发行版</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> isBuilt = !process.env.VSCODE_DEV;</span><br><span class="line"><span class="comment">// 应用程序根目录</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> appRoot = path.dirname(uri.parse(<span class="built_in">require</span>.toUrl(<span class="string">''</span>)).fsPath);</span><br><span class="line"><span class="comment">// 产品配置</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> product: IProductConfiguration = productContents;</span><br><span class="line"><span class="comment">// 程序版本</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> version = app.getVersion();</span><br><span class="line"><span class="comment">// 命令行参数</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> cliArgs = parseCli();</span><br><span class="line"><span class="comment">// 数据文件目录</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> appHome = app.getPath(<span class="string">'userData'</span>);</span><br><span class="line"><span class="comment">// setting文件路径</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> appSettingsPath = path.join(appSettingsHome, <span class="string">'settings.json'</span>);</span><br><span class="line"><span class="comment">// keybindings文件路径</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> appKeybindingsPath = path.join(appSettingsHome, <span class="string">'keybindings.json'</span>);</span><br><span class="line"><span class="comment">// 用户插件目录</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> userExtensionsHome = cliArgs.extensionsHomePath || path.join(userHome, <span class="string">'extensions'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="初始化管理器"><a href="#初始化管理器" class="headerlink" title="初始化管理器"></a>初始化管理器</h2><p>在main.ts的main方法中，初始化了主进程中的各个管理器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Lifecycle</span></span><br><span class="line">lifecycle.manager.ready();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Load settings</span></span><br><span class="line">settings.manager.loadSync();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Propagate to clients</span></span><br><span class="line">windows.manager.ready(userEnv);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Install Menu</span></span><br><span class="line">menu.manager.ready();</span><br><span class="line"></span><br><span class="line">.....</span><br><span class="line"></span><br><span class="line"><span class="comment">// Setup auto update</span></span><br><span class="line">UpdateManager.initialize();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>lifecycle 负责管理软件的生命周期，派发onBeforeQuit等事件。</li>
+<li>setting 负责管理用户设置和快捷键绑定的读取和存储。</li>
+<li>windows 负责窗口的创建和管理，非常核心的一个模块。</li>
+<li>menus 负责菜单栏的创建。</li>
+<li>update-manager 自动更新功能。<br>以上管理器中大量使用了Eletron的 ipc 模块发送接收渲染进程的消息，来实现主进程和渲染进程的交互。</li>
+</ul>
+<h2 id="打开第一个窗口"><a href="#打开第一个窗口" class="headerlink" title="打开第一个窗口"></a>打开第一个窗口</h2><p>在main.ts的main方法的最后</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Open our first window</span></span><br><span class="line"><span class="keyword">if</span> (env.cliArgs.openNewWindow &amp;&amp; env.cliArgs.pathArguments.length === <span class="number">0</span>) &#123;</span><br><span class="line">    windows.manager.open(&#123; <span class="attr">cli</span>: env.cliArgs, <span class="attr">forceNewWindow</span>: <span class="literal">true</span>, <span class="attr">forceEmpty</span>: <span class="literal">true</span> &#125;); <span class="comment">// new window if "-n" was used without paths</span></span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (global.macOpenFiles &amp;&amp; global.macOpenFiles.length &amp;&amp; (!env.cliArgs.pathArguments || !env.cliArgs.pathArguments.length)) &#123;</span><br><span class="line">    windows.manager.open(&#123; <span class="attr">cli</span>: env.cliArgs, <span class="attr">pathsToOpen</span>: global.macOpenFiles &#125;); <span class="comment">// mac: open-file event received on startup</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    windows.manager.open(&#123; <span class="attr">cli</span>: env.cliArgs, <span class="attr">forceNewWindow</span>: env.cliArgs.openNewWindow, <span class="attr">diffMode</span>: env.cliArgs.diffMode &#125;); <span class="comment">// default: read paths from cli</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用了 windows 模块的 open 方法打开了第一个窗口。这里调用了 env.cliArgs 获取命令行参数传递给 open 方法来实现不同的打开方式。</p>
+<p>在 open 方法中创建一个了 VSCodeWindow 实例，并且通过 toConfiguration 方法创建了一个 IWindowConfiguration 的对象。</p>
+<p>IWindowConfiguration 中定义了大量的 env 中的信息，包括环境变量，命令行参数，软件信息等。在之后 IWindowConfiguration 会作为参数传递给 VSCodeWindow 的 load 方法。</p>
+<p>VSCodeWindow 包装了一个 BrowserWindow 对象。load 方法调用 getUrl 加载了一个的 html文件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">private getUrl(config: IWindowConfiguration): string &#123;</span><br><span class="line">    <span class="keyword">let</span> url = <span class="built_in">require</span>.toUrl(<span class="string">'vs/workbench/electron-browser/index.html'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Config</span></span><br><span class="line">    url += <span class="string">'?config='</span> + <span class="built_in">encodeURIComponent</span>(<span class="built_in">JSON</span>.stringify(config));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> url;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到 IWindowConfiguration 被序列化成字符串作为参数传递给了 index.html。由于在浏览器进程要获取主进程中 env 模块的数据比较复杂(需要使用 ipc 通讯)。所以这里直接将一些基本信息打包成config传递给了浏览器进程。这时浏览器窗口才正式打开并初始化。</p>
+<h1 id="启动浏览器"><a href="#启动浏览器" class="headerlink" title="启动浏览器"></a>启动浏览器</h1><h2 id="初始化loader-1"><a href="#初始化loader-1" class="headerlink" title="初始化loader"></a>初始化loader</h2><p>浏览器的入口在 index.html 中。与主进程类似这里也对loader进行了初始化并加载浏览器主模块 main 。主要代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 解析config参数</span></span><br><span class="line"><span class="keyword">var</span> args = parseURLQueryArgs();</span><br><span class="line"><span class="keyword">var</span> configuration = <span class="built_in">JSON</span>.parse(args[<span class="string">'config'</span>]);</span><br><span class="line">......</span><br><span class="line"><span class="comment">// loader的加载根目录</span></span><br><span class="line"><span class="keyword">var</span> rootUrl = uriFromPath(configuration.appRoot) + <span class="string">'/out'</span>;</span><br><span class="line"><span class="comment">// 加载loader</span></span><br><span class="line">createScript(rootUrl + <span class="string">'/vs/loader.js'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 多语言配置</span></span><br><span class="line">    <span class="keyword">var</span> nlsConfig;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> config = process.env[<span class="string">'VSCODE_NLS_CONFIG'</span>];</span><br><span class="line">        <span class="keyword">if</span> (config) &#123;</span><br><span class="line">            nlsConfig = <span class="built_in">JSON</span>.parse(config);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!nlsConfig) &#123;</span><br><span class="line">        nlsConfig = &#123; <span class="attr">availableLanguages</span>: &#123;&#125; &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 配置loader</span></span><br><span class="line">    <span class="built_in">require</span>.config(&#123;</span><br><span class="line">        baseUrl: rootUrl,</span><br><span class="line">        <span class="string">'vs/nls'</span>: nlsConfig,</span><br><span class="line">        recordStats: configuration.enablePerformance</span><br><span class="line">    &#125;);</span><br><span class="line">    ......</span><br><span class="line">    <span class="built_in">require</span>([</span><br><span class="line">        <span class="comment">// 项目正式发布后大多数的js都被合并进了workbench.main.js中</span></span><br><span class="line">        <span class="string">'vs/workbench/workbench.main'</span>,</span><br><span class="line">        <span class="string">'vs/nls!vs/workbench/workbench.main'</span>,</span><br><span class="line">        <span class="string">'vs/css!vs/workbench/workbench.main'</span></span><br><span class="line">    ], <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        timers.afterLoad = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 浏览器主模块</span></span><br><span class="line">        <span class="keyword">var</span> main = <span class="built_in">require</span>(<span class="string">'vs/workbench/electron-browser/main'</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// config作为参数，调用startup启动主模块</span></span><br><span class="line">        main.startup(configuration, globalSettings).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            mainStarted = <span class="literal">true</span>;</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123; onError(error, enableDeveloperTools) &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="初始化工作台"><a href="#初始化工作台" class="headerlink" title="初始化工作台"></a>初始化工作台</h2><p>在 main 模块的 startup 方法中进一步加工 config，并创建了一个 workspace。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">startup</span>(<span class="params">environment: IMainEnvironment, globalSettings: IGlobalSettings</span>): <span class="title">winjs</span>.<span class="title">TPromise</span>&lt;<span class="title">void</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将主进程中的环境变量合并到浏览器进程</span></span><br><span class="line">    assign(process.env, environment.userEnv);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Shell Configuration</span></span><br><span class="line">    <span class="keyword">let</span> shellConfiguration: IConfiguration = &#123;</span><br><span class="line">        env: environment</span><br><span class="line">    &#125;;</span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">let</span> shellOptions: IOptions = &#123;</span><br><span class="line">        ......</span><br><span class="line">    &#125;;</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">// Open workbench</span></span><br><span class="line">    <span class="keyword">return</span> openWorkbench(getWorkspace(environment), shellConfiguration, shellOptions);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getWorkspace</span>(<span class="params">environment: IMainEnvironment</span>): <span class="title">IWorkspace</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!environment.workspacePath) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">let</span> workspace: IWorkspace = &#123;</span><br><span class="line">        <span class="string">'resource'</span>: workspaceResource,</span><br><span class="line">        <span class="string">'id'</span>: platform.isLinux ? realWorkspacePath : realWorkspacePath.toLowerCase(),</span><br><span class="line">        <span class="string">'name'</span>: folderName,</span><br><span class="line">        <span class="string">'uid'</span>: platform.isLinux ? folderStat.ino : folderStat.birthtime.getTime(),</span><br><span class="line">        <span class="string">'mtime'</span>: folderStat.mtime.getTime()</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> workspace;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的 environment 就是上文的 config。 IWorkspace 记录了当前打开的文件夹路径等信息(当打开单文件时 IWorkspace 不存在)。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">openWorkbench</span>(<span class="params">workspace: IWorkspace, configuration: IConfiguration, options: IOptions</span>): <span class="title">winjs</span>.<span class="title">TPromise</span>&lt;<span class="title">void</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> eventService = <span class="keyword">new</span> EventService();</span><br><span class="line">    <span class="keyword">let</span> contextService = <span class="keyword">new</span> WorkspaceContextService(eventService, workspace, configuration, options);</span><br><span class="line">    <span class="keyword">let</span> configurationService = <span class="keyword">new</span> ConfigurationService(contextService, eventService);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> configurationService.initialize().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            ......</span><br><span class="line">            <span class="keyword">let</span> shell = <span class="keyword">new</span> WorkbenchShell(<span class="built_in">document</span>.body, workspace, &#123;</span><br><span class="line">                configurationService,</span><br><span class="line">                eventService,</span><br><span class="line">                contextService</span><br><span class="line">            &#125;, configuration, options);</span><br><span class="line">            shell.open();</span><br><span class="line">            ......</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 openWorkbench 创建了三个基本服务(Service)，并将 config，workspace 等参数传给 WorkbenchShell 。WorkbenchShell 获取html文档的 body 节点准备创建界面。</p>
+<h2 id="初始化服务"><a href="#初始化服务" class="headerlink" title="初始化服务"></a>初始化服务</h2><p>WorkbenchShell 主要负责初始化各服务(Service)，并创建了一个 Workbench 完成界面的初始化工作。</p>
+<p>常用的Service比如</p>
+<ul>
+<li>IStorageService 浏览器进程数据的持久化存储与读取。</li>
+<li>IWorkspaceContextService 获取工作空间数据和config等基本配置信息。</li>
+<li>IKeybindingService 管理快捷键相关的注册。</li>
+<li>IFileService 封装了文件操作的相关API，并实现 FileWatcher 功能。</li>
+<li>IExtensionService 管理插件的初始化，加载和交互。</li>
+<li>IInstantiationService 负责创建实例对象，这个Service比较重要，下面单独说明。</li>
+<li>initInstantiationService 方法中创建了各个服务，并返回 IInstantiationService。</li>
+</ul>
+<p>IInstantiationService</p>
+<p>在vscode中随处可见 IInstantiationService 的应用。以 CloseWindowAction 为例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">CloseWindowAction</span> <span class="keyword">extends</span> <span class="title">Action</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">static</span> ID = <span class="string">'workbench.action.closeWindow'</span>;</span><br><span class="line">    public <span class="keyword">static</span> LABEL = nls.localize(<span class="string">'closeWindow'</span>, <span class="string">"Close Window"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>(id: string, label: string, @IWindowService private windowService: IWindowService) &#123;</span><br><span class="line">        <span class="keyword">super</span>(CloseWindowAction.ID, label);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public run(): TPromise&lt;boolean&gt; &#123;</span><br><span class="line">        <span class="keyword">this</span>.windowService.getWindow().close();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> TPromise.as(<span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在构造函数(constructor)中，后面的参数写法比较特殊</p>
+<p>@IWindowService private windowService: IWindowService<br>使用了 @IWindowService 这种decorate语法。当要创建 CloseWindowAction 这个实例时，可以使用 IInstantiationService 只需要传入前两个参数，在IInstantiationService 中能获取所有的其他服务对象， windowService 这个参数由 IInstantiationService 传入。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.instantiationService.createInstance(CloseWindowAction, CloseWindowAction.ID， CloseWindowAction.LABEL);</span><br></pre></td></tr></table></figure>
+<h2 id="创建Workbench"><a href="#创建Workbench" class="headerlink" title="创建Workbench"></a>创建Workbench</h2><p>WorkbenchShell 的 createContents 方法还创建了一个 Workbench 负责整个界面的创建。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">private createContents(parent: Builder): Builder &#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">// Instantiation service with services</span></span><br><span class="line">    <span class="keyword">let</span> instantiationService = <span class="keyword">this</span>.initInstantiationService();</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">// Workbench</span></span><br><span class="line">    <span class="keyword">this</span>.workbench = <span class="keyword">new</span> Workbench(workbenchContainer.getHTMLElement(), <span class="keyword">this</span>.workspace, <span class="keyword">this</span>.configuration, <span class="keyword">this</span>.options, instantiationService);</span><br><span class="line">    <span class="keyword">this</span>.workbench.startup(&#123;</span><br><span class="line">        onServicesCreated: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.initExtensionSystem();</span><br><span class="line">        &#125;,</span><br><span class="line">        onWorkbenchStarted: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.onWorkbenchStarted();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Workbench 是 IPartService 的具体实现。vscode由多个Part组成。</p>
+<ul>
+<li>activitybar 是最左边(也可以设置到右边)的选项卡。目前有 Explore，Search，Git，Debug 这4个选项卡。</li>
+<li>sidebar 是activitybar选中的内容。</li>
+<li>editor 是最主要的编辑器部分。</li>
+<li>statusbar 是下方的状态栏。</li>
+<li>panel 是状态栏上方的面板选项卡，目前主要有 output，debug，errorlist 等几个面板。</li>
+<li>quickopen 是悬浮在中上方的弹出界面，常用的命令面板(F1)就是一个quickopen widget。</li>
+</ul>
+<p><img src="/2019/06/25/vs-code/2.png" alt="ss"></p>
+<p>下面的代码展示了各个part的创建，并添加到显示列表。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">private renderWorkbench(): <span class="keyword">void</span> &#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">// Create Parts</span></span><br><span class="line">    <span class="keyword">this</span>.createActivityBarPart();</span><br><span class="line">    <span class="keyword">this</span>.createSidebarPart();</span><br><span class="line">    <span class="keyword">this</span>.createEditorPart();</span><br><span class="line">    <span class="keyword">this</span>.createPanelPart();</span><br><span class="line">    <span class="keyword">this</span>.createStatusbarPart();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create QuickOpen</span></span><br><span class="line">    <span class="keyword">this</span>.createQuickOpen();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Add Workbench to DOM</span></span><br><span class="line">    <span class="keyword">this</span>.workbenchContainer.build(<span class="keyword">this</span>.container);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="扩展点的注册和实现"><a href="#扩展点的注册和实现" class="headerlink" title="扩展点的注册和实现"></a>扩展点的注册和实现</h1><p>vscode中几乎每个部分都是可扩展的。例如最常见的有快捷键命令的注册，编辑器类型的扩展，扩展输出面板Channel。下面以 ViewletRegistry 为例，分析 activitybar 和 sidebar 上面的 Explore 文件浏览器是如何显示的。</p>
+<h2 id="contribution"><a href="#contribution" class="headerlink" title="contribution"></a>contribution</h2><p>通常情况下以 .contribution 结尾的模块，都用作扩展点的注册。由于一般情况下这些模块不会被其他模块依赖，所以要提供一个入口来加载这些模块，这个入口就是 workbench.main。</p>
+<p>其中 Explore 文件浏览器的注册是在 files.contribution 中定义的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Register Viewlet</span></span><br><span class="line">(&lt;ViewletRegistry&gt;Registry.as(ViewletExtensions.Viewlets)).registerViewlet(new ViewletDescriptor(</span><br><span class="line">    'vs/workbench/parts/files/browser/explorerViewlet',</span><br><span class="line">    'ExplorerViewlet',</span><br><span class="line">    VIEWLET_ID,</span><br><span class="line">    nls.localize('explore', "Explorer"),</span><br><span class="line">    'explore',</span><br><span class="line">    0</span><br><span class="line">));</span><br><span class="line"></span><br><span class="line">(&lt;ViewletRegistry&gt;Registry.as(ViewletExtensions.Viewlets)).setDefaultViewletId(VIEWLET_ID);</span><br><span class="line">explorerViewlet 模块是 Explore 的界面显示入口。</span><br></pre></td></tr></table></figure>
+<h2 id="registry"><a href="#registry" class="headerlink" title="registry"></a>registry</h2><p>platform 中定义了 IRegistry 接口及实现。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> interface IRegistry &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Adds the extension functions and properties defined by data to the</span></span><br><span class="line"><span class="comment">     * platform. The provided id must be unique.</span></span><br><span class="line"><span class="comment">     * @param id a unique identifier</span></span><br><span class="line"><span class="comment">     * @param data a contribution</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    add(id: string, <span class="attr">data</span>: any): <span class="keyword">void</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns true iff there is an extension with the provided id.</span></span><br><span class="line"><span class="comment">     * @param id an extension idenifier</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    knows(id: string): boolean;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the extension functions and properties defined by the specified key or null.</span></span><br><span class="line"><span class="comment">     * @param id an extension idenifier</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">as</span>(id: string): any;</span><br><span class="line">    <span class="keyword">as</span>&lt;T&gt;(id: string): T;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>add 添加一个注册点， as 方法获取一个注册点对象。</p>
+<p>viewlet 模块添加了 ViewletRegistry。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Registry.add(Extensions.Viewlets, <span class="keyword">new</span> ViewletRegistry());</span><br></pre></td></tr></table></figure>
+<p>之后可以通过 Registry.as(Extensions.Viewlets) 获取 ViewletRegistry 注册不同的 Viewlet。</p>
+<h2 id="实现注册功能"><a href="#实现注册功能" class="headerlink" title="实现注册功能"></a>实现注册功能</h2><p>所有的注册信息储存在 ViewletRegistry 中，使用时通过 getViewlet 或者 getViewlets 方法获取。 activitybarPart 实现了注册点的读取，并填充 ActionBar，显示出来。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">private createViewletSwitcher(div: Builder): <span class="keyword">void</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Viewlet switcher is on top</span></span><br><span class="line">    <span class="keyword">this</span>.viewletSwitcherBar = <span class="keyword">new</span> ActionBar(div, &#123;</span><br><span class="line">        .......</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">this</span>.viewletSwitcherBar.getContainer().addClass(<span class="string">'position-top'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Build Viewlet Actions in correct order</span></span><br><span class="line">    <span class="keyword">let</span> activeViewlet = <span class="keyword">this</span>.viewletService.getActiveViewlet();</span><br><span class="line">    <span class="keyword">let</span> registry = (&lt;ViewletRegistry&gt;Registry.as(ViewletExtensions.Viewlets));</span><br><span class="line">    let viewletActions: Action[] = registry.getViewlets()     // 获取注册的viewlets</span><br><span class="line">        .sort((v1: ViewletDescriptor, v2: ViewletDescriptor) =&gt; v1.order - v2.order)</span><br><span class="line">        .map((viewlet: ViewletDescriptor) =&gt; &#123;</span><br><span class="line">            let action = this.instantiationService.createInstance(ViewletActivityAction, viewlet.id + '.activity-bar-action', viewlet);</span><br><span class="line">            ......</span><br><span class="line">            return action;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    // Add to viewlet switcher</span><br><span class="line">    this.viewletSwitcherBar.push(viewletActions, &#123; label: true, icon: true &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类似的这种扩展点还有很多，如:</p>
+<ul>
+<li>IWorkbenchActionRegistry 注册一个action和快捷键，并出现在命令面板中。</li>
+<li>IEditorRegistry 注册一种编辑器。</li>
+<li>IConfigurationRegistry 注册设置项。</li>
+<li>IActionBarRegistry 注册右键菜单。<br>这种通过注册扩展点的架构方式，使得vscode整体变得很容易扩展。</li>
+</ul>
+<h1 id="VSCode-PK-Atom"><a href="#VSCode-PK-Atom" class="headerlink" title="VSCode PK Atom"></a>VSCode PK Atom</h1><p>vscode整体架构给人一种很清晰明了的感觉。多进程从主进程到浏览器，从浏览器到插件系统，服务驱动，可扩展的结构。</p>
+<p>另外无论是UI组件还是工具和加载器都是自身实现的，没有借助第三方模块，使得耦合性和性能都得到了很好的保障。这也是vscode速度比Atom快的原因。</p>
+<p>尽管扩展vscode自身是很容易的，但是目前vscode开放的插件接口还是极其有限。由于为了保证渲染进程的安全和速度，插件是一个单独的Node进程，插件进程无法创建UI，这一点使得vscode的插件开放没有Atom灵活，很多需要借助UI的插件功能也无法实现。</p>
+<blockquote>
+<p>转载：<a href="http://xzper.com/2016/04/17/vscode%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/" target="_blank" rel="noopener">http://xzper.com/2016/04/17/vscode%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/</a></p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vscode/" rel="tag"># vscode</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/24/css-grid/" rel="next" title="CSS Grid 网格布局">
+                <i class="fa fa-chevron-left"></i> CSS Grid 网格布局
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/08/ssh-vs/" rel="prev" title="vs code 通过ssh 远程连接 linux">
+                vs code 通过ssh 远程连接 linux <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/ss.png" alt="mibb005">
+            
+              <p class="site-author-name" itemprop="name">mibb005</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">65</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Electron"><span class="nav-number">1.</span> <span class="nav-text">Electron</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多进程"><span class="nav-number">2.</span> <span class="nav-text">多进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主进程"><span class="nav-number">3.</span> <span class="nav-text">主进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#渲染进程"><span class="nav-number">4.</span> <span class="nav-text">渲染进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插件进程"><span class="nav-number">5.</span> <span class="nav-text">插件进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VSCode-Loader"><span class="nav-number">6.</span> <span class="nav-text">VSCode Loader</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目结构"><span class="nav-number">7.</span> <span class="nav-text">项目结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">7.1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#browser"><span class="nav-number">7.2.</span> <span class="nav-text">browser</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#common"><span class="nav-number">7.3.</span> <span class="nav-text">common</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node"><span class="nav-number">7.4.</span> <span class="nav-text">node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#editor-and-language"><span class="nav-number">7.5.</span> <span class="nav-text">editor and language</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#platform-and-workbench"><span class="nav-number">7.6.</span> <span class="nav-text">platform and workbench</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动主进程"><span class="nav-number">8.</span> <span class="nav-text">启动主进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化loader"><span class="nav-number">8.1.</span> <span class="nav-text">初始化loader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析命令行参数"><span class="nav-number">8.2.</span> <span class="nav-text">解析命令行参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化管理器"><span class="nav-number">8.3.</span> <span class="nav-text">初始化管理器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打开第一个窗口"><span class="nav-number">8.4.</span> <span class="nav-text">打开第一个窗口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动浏览器"><span class="nav-number">9.</span> <span class="nav-text">启动浏览器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化loader-1"><span class="nav-number">9.1.</span> <span class="nav-text">初始化loader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化工作台"><span class="nav-number">9.2.</span> <span class="nav-text">初始化工作台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化服务"><span class="nav-number">9.3.</span> <span class="nav-text">初始化服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建Workbench"><span class="nav-number">9.4.</span> <span class="nav-text">创建Workbench</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扩展点的注册和实现"><span class="nav-number">10.</span> <span class="nav-text">扩展点的注册和实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#contribution"><span class="nav-number">10.1.</span> <span class="nav-text">contribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#registry"><span class="nav-number">10.2.</span> <span class="nav-text">registry</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现注册功能"><span class="nav-number">10.3.</span> <span class="nav-text">实现注册功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VSCode-PK-Atom"><span class="nav-number">11.</span> <span class="nav-text">VSCode PK Atom</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mibb005</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
