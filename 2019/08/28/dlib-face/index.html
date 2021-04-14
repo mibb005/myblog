@@ -44,21 +44,21 @@
 
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+<link rel="stylesheet" href="/myblog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
 
-<link rel="stylesheet" href="/css/main.css?v=7.1.1">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+<link rel="stylesheet" href="/myblog/css/main.css?v=7.1.1">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/myblog/images/apple-touch-icon-next.png?v=7.1.1">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/myblog/images/favicon-32x32-next.png?v=7.1.1">
 
 
-  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="/myblog/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/myblog/images/logo.svg?v=7.1.1" color="#222">
 
 
 
@@ -69,7 +69,7 @@
 <script id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/',
+    root: '/myblog/',
     scheme: 'Pisces',
     version: '7.1.1',
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
@@ -100,17 +100,17 @@
 <meta name="keywords" content="dlib,Python,opencv">
 <meta property="og:type" content="article">
 <meta property="og:title" content="人脸比对">
-<meta property="og:url" content="http://yoursite.com/2019/08/28/dlib-face/index.html">
+<meta property="og:url" content="https://mibb005.github.io/2019/08/28/dlib-face/index.html">
 <meta property="og:site_name" content="mibb005">
 <meta property="og:description" content="原理使用dlib标定人脸，提取68个特征点，将人脸的信息提取成一个128维的向量空间。在这个向量空间上，同一个人脸的更接近，不同人脸的距离更远。度量采用欧式距离，欧氏距离计算不算复杂。 二维情况下：  $$ \sqrt{(x1−x2)^2+(y1−y2)^2} $$ 三维情况下：  $$ \sqrt{(x1−x2)^2+(y1−y2)^2+(z1−z2)^2} $$ 将其扩展到128维的情况下即可">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/08/28/dlib-face/output_3_1.png">
-<meta property="og:image" content="http://yoursite.com/2019/08/28/dlib-face/output_3_3.png">
-<meta property="og:updated_time" content="2021-04-14T03:14:12.199Z">
+<meta property="og:image" content="https://mibb005.github.io/2019/08/28/dlib-face/output_3_1.png">
+<meta property="og:image" content="https://mibb005.github.io/2019/08/28/dlib-face/output_3_3.png">
+<meta property="og:updated_time" content="2021-04-14T03:23:29.378Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="人脸比对">
 <meta name="twitter:description" content="原理使用dlib标定人脸，提取68个特征点，将人脸的信息提取成一个128维的向量空间。在这个向量空间上，同一个人脸的更接近，不同人脸的距离更远。度量采用欧式距离，欧氏距离计算不算复杂。 二维情况下：  $$ \sqrt{(x1−x2)^2+(y1−y2)^2} $$ 三维情况下：  $$ \sqrt{(x1−x2)^2+(y1−y2)^2+(z1−z2)^2} $$ 将其扩展到128维的情况下即可">
-<meta name="twitter:image" content="http://yoursite.com/2019/08/28/dlib-face/output_3_1.png">
+<meta name="twitter:image" content="https://mibb005.github.io/2019/08/28/dlib-face/output_3_1.png">
 
 
 
@@ -118,7 +118,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/08/28/dlib-face/">
+  <link rel="canonical" href="https://mibb005.github.io/2019/08/28/dlib-face/">
 
 
 
@@ -185,7 +185,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/myblog/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">mibb005</span>
         <span class="logo-line-after"><i></i></span>
@@ -224,7 +224,7 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+    <a href="/myblog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
         
@@ -241,7 +241,7 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+    <a href="/myblog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
         
@@ -258,7 +258,7 @@
 
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+    <a href="/myblog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
 
   </li>
         
@@ -275,7 +275,7 @@
 
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+    <a href="/myblog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
         
@@ -292,7 +292,7 @@
 
     
 
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+    <a href="/myblog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
 
   </li>
 
@@ -373,12 +373,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/28/dlib-face/">
+    <link itemprop="mainEntityOfPage" href="https://mibb005.github.io/myblog/2019/08/28/dlib-face/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mibb005">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/ss.png">
+      <meta itemprop="image" content="/myblog/images/ss.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -433,7 +433,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-04-14 11:14:12" itemprop="dateModified" datetime="2021-04-14T11:14:12+08:00">2021-04-14</time>
+                <time title="修改时间：2021-04-14 11:23:29" itemprop="dateModified" datetime="2021-04-14T11:23:29+08:00">2021-04-14</time>
               
             
           </span>
@@ -451,8 +451,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/08/28/dlib-face/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/08/28/dlib-face/" itemprop="commentCount"></span>
+                <a href="/myblog/2019/08/28/dlib-face/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/myblog/2019/08/28/dlib-face/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -842,11 +842,11 @@ It&apos;s the same person
       
         <div class="post-tags">
           
-            <a href="/tags/dlib/" rel="tag"># dlib</a>
+            <a href="/myblog/tags/dlib/" rel="tag"># dlib</a>
           
-            <a href="/tags/Python/" rel="tag"># Python</a>
+            <a href="/myblog/tags/Python/" rel="tag"># Python</a>
           
-            <a href="/tags/opencv/" rel="tag"># opencv</a>
+            <a href="/myblog/tags/opencv/" rel="tag"># opencv</a>
           
         </div>
       
@@ -859,7 +859,7 @@ It&apos;s the same person
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/27/dlib-kun/" rel="next" title="困倦探测">
+              <a href="/myblog/2019/08/27/dlib-kun/" rel="next" title="困倦探测">
                 <i class="fa fa-chevron-left"></i> 困倦探测
               </a>
             
@@ -869,7 +869,7 @@ It&apos;s the same person
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/08/28/dlib-train/" rel="prev" title="dlib深度学习模型训练">
+              <a href="/myblog/2019/08/28/dlib-train/" rel="prev" title="dlib深度学习模型训练">
                 dlib深度学习模型训练 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -936,7 +936,7 @@ It&apos;s the same person
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/images/ss.png" alt="mibb005">
+              <img class="site-author-image" itemprop="image" src="/myblog/images/ss.png" alt="mibb005">
             
               <p class="site-author-name" itemprop="name">mibb005</p>
               <div class="site-description motion-element" itemprop="description"></div>
@@ -947,7 +947,7 @@ It&apos;s the same person
               
                 <div class="site-state-item site-state-posts">
                 
-                  <a href="/archives/">
+                  <a href="/myblog/archives/">
                 
                     <span class="site-state-item-count">65</span>
                     <span class="site-state-item-name">日志</span>
@@ -961,7 +961,7 @@ It&apos;s the same person
                 <div class="site-state-item site-state-categories">
                   
                     
-                      <a href="/categories/">
+                      <a href="/myblog/categories/">
                     
                   
                     
@@ -980,7 +980,7 @@ It&apos;s the same person
                 <div class="site-state-item site-state-tags">
                   
                     
-                      <a href="/tags/">
+                      <a href="/myblog/tags/">
                     
                   
                     
@@ -1220,44 +1220,44 @@ It&apos;s the same person
 
 
   
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  <script src="/myblog/lib/jquery/index.js?v=2.1.3"></script>
 
   
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/myblog/lib/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="/js/utils.js?v=7.1.1"></script>
-
-  <script src="/js/motion.js?v=7.1.1"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/affix.js?v=7.1.1"></script>
-
-  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
-
-
-
-  
-  <script src="/js/scrollspy.js?v=7.1.1"></script>
-<script src="/js/post-details.js?v=7.1.1"></script>
-
+  <script src="/myblog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
 
   
 
 
-  <script src="/js/next-boot.js?v=7.1.1"></script>
+  <script src="/myblog/js/utils.js?v=7.1.1"></script>
+
+  <script src="/myblog/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/myblog/js/affix.js?v=7.1.1"></script>
+
+  <script src="/myblog/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/myblog/js/scrollspy.js?v=7.1.1"></script>
+<script src="/myblog/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/myblog/js/next-boot.js?v=7.1.1"></script>
 
 
   
@@ -1284,7 +1284,7 @@ It&apos;s the same person
     } else if (/json$/i.test(search_path)) {
       isXml = false;
     }
-    var path = "/" + search_path;
+    var path = "/myblog/" + search_path;
     // monitor main search box;
 
     var onPopupClose = function (e) {
