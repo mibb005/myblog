@@ -6,6 +6,11 @@
     <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
   </entry>
   <entry>
+    <title><![CDATA[test]]></title>
+    <url>%2Fmyblog%2F2021%2F04%2F27%2Fgitpod%2F</url>
+    <content type="text"><![CDATA[测试]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[windows包管理工具 Chocolatey]]></title>
     <url>%2Fmyblog%2F2020%2F05%2F12%2Fwindows1-md%2F</url>
     <content type="text"><![CDATA[安装右键开始菜单，选择以管理员身份运行PowerShell，然后粘贴以下指令： 1Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString(&apos;https://chocolatey.org/install.ps1&apos;)) 用法choco install 软件名]]></content>
@@ -265,8 +270,8 @@
     <url>%2Fmyblog%2F2019%2F08%2F19%2Fshadowsocks%2F</url>
     <content type="text"><![CDATA[安装pipyum install python-setuptools &amp;&amp; easy_install pip 安装 shadowsockspip install shadowsocks 配置vi /etc/shadowsocks.json 1234567891011121314151617&#123;&quot;server&quot;:&quot;你的ip地址&quot;,&quot;server_port&quot;:443,&quot;local_address&quot;:&quot;127.0.0.1&quot;,&quot;local_port&quot;:1080,&quot;password&quot;:&quot;MyPass&quot;,&quot;timeout&quot;:600,&quot;method&quot;:&quot;rc4-md5&quot;&#125; 启动服务ssserver -c /etc/shadowsocks.json -d start 停止服务ssserver -c /etc/shadowsocks.json -d stop]]></content>
       <tags>
-        <tag>shadowsocks</tag>
         <tag>Centos</tag>
+        <tag>shadowsocks</tag>
       </tags>
   </entry>
   <entry>
