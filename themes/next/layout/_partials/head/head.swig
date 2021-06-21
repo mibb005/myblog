@@ -41,7 +41,7 @@
   <meta name="google-site-verification" content="{{ theme.google_site_verification }}"/>
 {% endif %}
 
-<script data-ad-client="ca-pub-8540522461785967" async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script data-ad-client="ca-pub-8540522461785967" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
 {% if theme.bing_site_verification %}
   <meta name="msvalidate.01" content="{{ theme.bing_site_verification }}"/>
