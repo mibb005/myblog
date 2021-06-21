@@ -41,8 +41,7 @@
 
     <main id="main" class="main">
       <div class="main-inner">
-        <div class="content-wrap">
-         <script data-ad-client="ca-pub-8540522461785967" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <div class="content-wrap">       
           {% if theme.scheme === 'Pisces' || theme.scheme === 'Gemini' %}
             {% include '_partials/header/sub-menu.swig' %}
           {% endif %}
