@@ -259,7 +259,20 @@
         </div>
       </header>
     {% endif %}
-
+    {% if not is_index %}
+    <div>
+          <!-- title -->
+      <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-8540522461785967"
+          data-ad-slot="2212095483"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+      <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    {% endif %}
     {#################}
     {### POST BODY ###}
     {#################}

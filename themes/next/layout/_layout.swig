@@ -34,20 +34,42 @@
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner">{% include '_partials/header/index.swig' %}</div>
+      <div class="header-inner">
+      {% include '_partials/header/index.swig' %}
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- foot -->
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-8540522461785967"
+            data-ad-slot="1801247543"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
     </header>
 
     {{ partial('_partials/github-banner.swig', {}, {cache: theme.cache.enable}) }}
 
     <main id="main" class="main">
       <div class="main-inner">
-        <div class="content-wrap">       
+        <div class="content-wrap">
           {% if theme.scheme === 'Pisces' || theme.scheme === 'Gemini' %}
             {% include '_partials/header/sub-menu.swig' %}
           {% endif %}
           <div id="content" class="content">
             {% block content %}{% endblock %}
           </div>
+             <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-8540522461785967"
+          data-ad-slot="2212095483"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+      <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
           {% include '_partials/comments.swig' %}
         </div>
         {% if theme.sidebar.display !== 'remove' %}
