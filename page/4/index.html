@@ -376,6 +376,187 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://mibb005.github.io/2019/08/26/jupyter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mibb005">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/ss.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mibb005">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/08/26/jupyter/" class="post-title-link" itemprop="url">jupyter用法</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-26 10:49:07" itemprop="dateCreated datePublished" datetime="2019-08-26T10:49:07+08:00">2019-08-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+    
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="将本地的-py文件load到jupyter的一个cell中"><a href="#将本地的-py文件load到jupyter的一个cell中" class="headerlink" title="将本地的.py文件load到jupyter的一个cell中"></a>将本地的.py文件load到jupyter的一个cell中</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># %load test.py</span></span><br><span class="line">print(<span class="string">'test'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>test
+</code></pre><h1 id="jupyter的cell可以作为unix-command使用"><a href="#jupyter的cell可以作为unix-command使用" class="headerlink" title="jupyter的cell可以作为unix command使用"></a>jupyter的cell可以作为unix command使用</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!python --version</span><br></pre></td></tr></table></figure>
+<pre><code>Python 3.7.0b2
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!python test.py</span><br></pre></td></tr></table></figure>
+<pre><code>test
+</code></pre><h1 id="从网络load代码到jupyter"><a href="#从网络load代码到jupyter" class="headerlink" title="从网络load代码到jupyter"></a>从网络load代码到jupyter</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># %load https://matplotlib.org/examples/color/color_cycle_demo.html</span></span><br></pre></td></tr></table></figure>
+<h1 id="获取current-working-directory"><a href="#获取current-working-directory" class="headerlink" title="获取current working directory"></a>获取current working directory</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">current_path = %pwd </span><br><span class="line">print(current_path)</span><br></pre></td></tr></table></figure>
+<pre><code>G:\tensorflow\Jupyter
+</code></pre><h1 id="运行代码"><a href="#运行代码" class="headerlink" title="运行代码"></a>运行代码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"Hello, World!"</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Hello, World!
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> letter <span class="keyword">in</span> <span class="string">'Python'</span>:     <span class="comment"># 第一个实例</span></span><br><span class="line">   print(<span class="string">'当前字母 :'</span>, letter)</span><br><span class="line"> </span><br><span class="line">fruits = [<span class="string">'banana'</span>, <span class="string">'apple'</span>,  <span class="string">'mango'</span>]</span><br><span class="line"><span class="keyword">for</span> fruit <span class="keyword">in</span> fruits:        <span class="comment"># 第二个实例</span></span><br><span class="line">   print(<span class="string">'当前水果 :'</span>, fruit)</span><br><span class="line"> </span><br><span class="line">print(<span class="string">"Good bye!"</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>当前字母 : P
+当前字母 : y
+当前字母 : t
+当前字母 : h
+当前字母 : o
+当前字母 : n
+当前水果 : banana
+当前水果 : apple
+当前水果 : mango
+Good bye!
+</code></pre><h1 id="使用Matplotlib绘图"><a href="#使用Matplotlib绘图" class="headerlink" title="使用Matplotlib绘图"></a>使用Matplotlib绘图</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.arange(<span class="number">20</span>)</span><br><span class="line">y = x**<span class="number">2</span></span><br><span class="line"></span><br><span class="line">plt.plot(x, y)</span><br></pre></td></tr></table></figure>
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x1d3e0edc3c8&gt;]
+</code></pre><p><img src="/2019/08/26/jupyter/output_15_1.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://mibb005.github.io/2019/08/23/opencv-dnn-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -438,7 +619,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-07-07 11:53:02" itemprop="dateModified" datetime="2021-07-07T11:53:02+08:00">2021-07-07</time>
+                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
               
             
           </span>
@@ -592,7 +773,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-07-07 11:53:02" itemprop="dateModified" datetime="2021-07-07T11:53:02+08:00">2021-07-07</time>
+                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
               
             
           </span>
@@ -746,7 +927,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-07-07 11:53:02" itemprop="dateModified" datetime="2021-07-07T11:53:02+08:00">2021-07-07</time>
+                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
               
             
           </span>
@@ -918,7 +1099,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-07-07 11:53:02" itemprop="dateModified" datetime="2021-07-07T11:53:02+08:00">2021-07-07</time>
+                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
               
             
           </span>
@@ -1078,7 +1259,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-07-07 11:53:02" itemprop="dateModified" datetime="2021-07-07T11:53:02+08:00">2021-07-07</time>
+                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
               
             
           </span>
@@ -1238,7 +1419,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-07-07 11:53:02" itemprop="dateModified" datetime="2021-07-07T11:53:02+08:00">2021-07-07</time>
+                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
               
             
           </span>
@@ -1506,7 +1687,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-07-07 11:53:02" itemprop="dateModified" datetime="2021-07-07T11:53:02+08:00">2021-07-07</time>
+                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
               
             
           </span>
@@ -1663,7 +1844,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-07-07 11:53:02" itemprop="dateModified" datetime="2021-07-07T11:53:02+08:00">2021-07-07</time>
+                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
               
             
           </span>
@@ -1824,7 +2005,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-07-07 11:53:02" itemprop="dateModified" datetime="2021-07-07T11:53:02+08:00">2021-07-07</time>
+                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
               
             
           </span>
@@ -1863,179 +2044,6 @@
             <p>GateOne是一个能在阅读器上运转的Terminal SSH客户端，不管你在那里，只需有网，你便可以用阅读器操控你的VPS云主机，还支援右键复制/粘贴等客户端经常使用效能，包罗多窗口等，应用起来异常便宜，同时别的人也能够应用，之前也说过一品种似的东西WebSSH2，检察：WebSSH2装置教程，都挺好用的，这边就说下应用Docker快速装置GateOne，并增加SSL证明。</p>
 <h1 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull liftoff/gateone</span><br></pre></td></tr></table></figure>
 <h1 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 443:8000 -h Rats --name gateone -v $PWD/gateone:/etc/gateone/conf.d liftoff/gateone gateone</span><br><span class="line"></span><br><span class="line">参数说明：</span><br><span class="line">-d/-t：决定镜像是使用Deamon（后台）模式启动，或者显示启动过程 </span><br><span class="line">-p 443:8000：绑定端口，注意：GateOne强制使用SSL，8000端口为Docker容器内的固定映射端口，请只改动冒号前面的端口，不要动后面的端口号！ </span><br><span class="line">-h hostname：设置Docker容器的主机名（这个将会显示在你的浏览器标题中） </span><br><span class="line">--name gateone：设置Docker容器的名称（不是主机名），用来docker ps时识别用 </span><br><span class="line">liftoff/gateone：镜像名称 </span><br><span class="line">gateone：启动命令行，勿动（默认命令行会发生Python io_loop报错，故使用此命令行来避免错误）</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://mibb005.github.io/2019/06/12/Shadow/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="mibb005">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/ss.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mibb005">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/06/12/Shadow/" class="post-title-link" itemprop="url">Shadowsocks原理</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-06-12 15:47:03" itemprop="dateCreated datePublished" datetime="2019-06-12T15:47:03+08:00">2019-06-12</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2021-07-07 11:53:02" itemprop="dateModified" datetime="2021-07-07T11:53:02+08:00">2021-07-07</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-    
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>本文将教你从0写一个Shadowsocks，无需任何基础，读完本文你就能完成一个轻量级、高性能的 Shadowsocks 代替品。<br>我们暂且把最终完成的项目叫做 Lightsocks，如果你很急切地想看到结果，可以先体验本文最终完成的项目 Lightsocks ，也可以下载阅读源码。</p>
-</blockquote>
-<h2 id="认识-Shadowsocks"><a href="#认识-Shadowsocks" class="headerlink" title="认识 Shadowsocks"></a>认识 Shadowsocks</h2><p>hadowsocks 是一个能骗过防火墙的网络代理工具。它把要传输的原数据经过加密后再传输，网络中的防火墙由于得不出要传输的原内容是什么而只好放行，于是就完成了防火墙穿透，也即是所谓的“翻墙”。</p>
-<p>在自由的网络环境下，在本机上访问服务时是直接和远程服务建立连接传输数据，流程如图：</p>
-<p><img src="/2019/06/12/Shadow/1.png" alt="图片alt" title="&#39;图片title&#39;"></p>
-<p>自由网络环境下的传输流程</p>
-<p>但在受限的网络环境下会有防火墙，本机电脑和远程服务之间传输的数据都必须通过防火墙的检查，流程如图：</p>
-<p><img src="/2019/06/12/Shadow/2.png" alt="图片alt" title="&#39;图片title&#39;"></p>
-<p>受限网络环境下的传输流程<br>如果防火墙发现你在传输受限的内容，就把拦截本次传输，就会导致在本机无法访问远程服务。</p>
-<p>而 Shadowsocks 所做的就是把传输的数据加密，防火墙得到的数据是加密后的数据，防火墙不知道传输的原内容是什么，于是防火墙就放行本次请求，于是在本机就访问到了远程服务，流程如图：</p>
-<p><img src="/2019/06/12/Shadow/3.png" alt="图片alt" title="&#39;图片title&#39;"></p>
-<p>shadowsocks下的传输流程</p>
-<p>也就是说使用 Shadowsocks 的前提是：</p>
-<ul>
-<li>一台在防火墙之外的服务器；</li>
-<li>在本机需要安装 Shadowsocks 本地端，用于加密传输数据；</li>
-<li>服务器需要安装 Shadowsocks 服务端，用于解密加密后的传输数据，解密出原数据后发送到目标服务器。</li>
-</ul>
 
           
         
@@ -2129,7 +2137,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">67</span>
+                    <span class="site-state-item-count">68</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2257,7 +2265,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">46</span>
+                      
+                    
+                    <span class="site-state-item-count">47</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
