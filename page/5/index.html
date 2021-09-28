@@ -376,6 +376,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://mibb005.github.io/2019/06/13/gateone/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mibb005">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/ss.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mibb005">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/06/13/gateone/" class="post-title-link" itemprop="url">gateone docker安装配置</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-13 15:13:37" itemprop="dateCreated datePublished" datetime="2019-06-13T15:13:37+08:00">2019-06-13</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+    
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>GateOne是一个能在阅读器上运转的Terminal SSH客户端，不管你在那里，只需有网，你便可以用阅读器操控你的VPS云主机，还支援右键复制/粘贴等客户端经常使用效能，包罗多窗口等，应用起来异常便宜，同时别的人也能够应用，之前也说过一品种似的东西WebSSH2，检察：WebSSH2装置教程，都挺好用的，这边就说下应用Docker快速装置GateOne，并增加SSL证明。</p>
+<h1 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull liftoff/gateone</span><br></pre></td></tr></table></figure>
+<h1 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 443:8000 -h Rats --name gateone -v $PWD/gateone:/etc/gateone/conf.d liftoff/gateone gateone</span><br><span class="line"></span><br><span class="line">参数说明：</span><br><span class="line">-d/-t：决定镜像是使用Deamon（后台）模式启动，或者显示启动过程 </span><br><span class="line">-p 443:8000：绑定端口，注意：GateOne强制使用SSL，8000端口为Docker容器内的固定映射端口，请只改动冒号前面的端口，不要动后面的端口号！ </span><br><span class="line">-h hostname：设置Docker容器的主机名（这个将会显示在你的浏览器标题中） </span><br><span class="line">--name gateone：设置Docker容器的名称（不是主机名），用来docker ps时识别用 </span><br><span class="line">liftoff/gateone：镜像名称 </span><br><span class="line">gateone：启动命令行，勿动（默认命令行会发生Python io_loop报错，故使用此命令行来避免错误）</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://mibb005.github.io/2019/06/12/Shadow/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -438,7 +595,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -611,7 +768,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -772,7 +929,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -937,7 +1094,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -1098,7 +1255,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -1265,7 +1422,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -1423,7 +1580,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -1587,7 +1744,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -1743,7 +1900,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -1788,175 +1945,6 @@
             </div>
           
           <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://mibb005.github.io/2019/05/22/lunx/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="mibb005">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/ss.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mibb005">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/22/lunx/" class="post-title-link" itemprop="url">Linux如何查看端口状态</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-05-22 14:10:45" itemprop="dateCreated datePublished" datetime="2019-05-22T14:10:45+08:00">2019-05-22</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-    
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>netstat命令各个参数说明如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">　　-t : 指明显示TCP端口</span><br><span class="line"></span><br><span class="line">　　-u : 指明显示UDP端口</span><br><span class="line"></span><br><span class="line">　　-l : 仅显示监听套接字(所谓套接字就是使应用程序能够读写与收发通讯协议(protocol)与资料的程序)</span><br><span class="line"></span><br><span class="line">　　-p : 显示进程标识符和程序名称，每一个套接字/端口都属于一个程序。</span><br><span class="line"></span><br><span class="line">　　-n : 不进行DNS轮询，显示IP(可以加速操作)</span><br></pre></td></tr></table></figure>
-<p>即可显示当前服务器上所有端口及进程服务，于grep结合可查看某个具体端口及服务情况··</p>
-<p><code>netstat -ntlp</code>  //查看当前所有tcp端口·</p>
-<p><code>netstat -ntulp |grep 80</code>   //查看所有80端口使用情况·</p>
-<p><code>netstat -an | grep 3306</code>  //查看所有3306端口使用情况·</p>
-<p>查看一台服务器上面哪些服务及端口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat  -lanp</span><br></pre></td></tr></table></figure>
-<p>查看一个服务有几个端口。比如要查看mysqld</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef |grep mysqld</span><br></pre></td></tr></table></figure>
-<p>查看某一端口的连接数量,比如3306端口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -pnt |grep :3306 |wc</span><br></pre></td></tr></table></figure>
-<p>查看某一端口的连接客户端IP 比如3306端口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">netstat -anp |grep 3306</span><br><span class="line"></span><br><span class="line">netstat -an 查看网络端口 </span><br><span class="line"></span><br><span class="line">lsof -i :port，使用lsof -i :port就能看见所指定端口运行的程序，同时还有当前连接。</span><br></pre></td></tr></table></figure>
-<p>nmap 端口扫描</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">netstat -nupl  (UDP类型的端口)</span><br><span class="line">netstat -ntpl  (TCP类型的端口)</span><br><span class="line">netstat -anp 显示系统端口使用情况</span><br></pre></td></tr></table></figure>
-          
         
       
     </div>
@@ -2048,7 +2036,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">68</span>
+                    <span class="site-state-item-count">69</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

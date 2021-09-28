@@ -376,7 +376,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://mibb005.github.io/2021/09/23/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://mibb005.github.io/2021/09/28/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mibb005">
@@ -396,7 +396,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2021/09/23/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+                <a href="/2021/09/28/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
               
             
           </h1>
@@ -421,7 +421,7 @@
                 
               
 
-              <time title="创建时间：2021-09-23 15:17:07" itemprop="dateCreated datePublished" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+              <time title="创建时间：2021-09-28 14:05:15" itemprop="dateCreated datePublished" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
             
 
             
@@ -461,12 +461,175 @@
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2021/09/23/hello-world/#more" rel="contents">
+              <a class="btn" href="/2021/09/28/hello-world/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
           
           <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://mibb005.github.io/2021/09/28/aliyun/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mibb005">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/ss.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mibb005">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2021/09/28/aliyun/" class="post-title-link" itemprop="url">阿里云盘挂载</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-09-28 13:53:34 / 修改时间：14:05:15" itemprop="dateCreated datePublished" datetime="2021-09-28T13:53:34+08:00">2021-09-28</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+    
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="获取refreshToken"><a href="#获取refreshToken" class="headerlink" title="获取refreshToken"></a>获取refreshToken</h2><p><a href="https://www.aliyundrive.com/sign/" target="_blank" rel="noopener">https://www.aliyundrive.com/sign/</a> 登录网页版  按f12打开控制台—application—local storage—token，即可查看refresh token</p>
+<h2 id="安装webdav工具"><a href="#安装webdav工具" class="headerlink" title="安装webdav工具"></a>安装webdav工具</h2><p><a href="https://github.com/zxbu/webdav-aliyundriver.git" target="_blank" rel="noopener">https://github.com/zxbu/webdav-aliyundriver.git</a><br>下载运行文件或源码编译</p>
+<h2 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar webdav.jar --aliyundrive.refresh-token=&quot;your refreshToken&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">--aliyundrive.refresh-token</span><br><span class="line">    阿里云盘的refreshToken，获取方式见下文</span><br><span class="line">--server.port</span><br><span class="line">    非必填，服务器端口号，默认为8080</span><br><span class="line">--aliyundrive.auth.enable=true</span><br><span class="line">    是否开启WebDav账户验证，默认开启</span><br><span class="line">--aliyundrive.auth.user-name=admin</span><br><span class="line">    WebDav账户，默认admin</span><br><span class="line">--aliyundrive.auth.password=admin</span><br><span class="line">    WebDav密码，默认admin</span><br></pre></td></tr></table></figure>
+<h2 id="容器运行"><a href="#容器运行" class="headerlink" title="容器运行"></a>容器运行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=webdav-aliyundriver --restart=always -p 8080:8080  -v /etc/localtime:/etc/localtime -v /etc/aliyun-driver/:/etc/aliyun-driver/ -e TZ=&quot;Asia/Shanghai&quot; -e ALIYUNDRIVE_REFRESH_TOKEN=&quot;your refreshToken&quot; -e ALIYUNDRIVE_AUTH_PASSWORD=&quot;admin&quot; -e JAVA_OPTS=&quot;-Xmx1g&quot; zx5253/webdav-aliyundriver</span><br></pre></td></tr></table></figure>
+<h1 id="安装Rclone进行挂载"><a href="#安装Rclone进行挂载" class="headerlink" title="安装Rclone进行挂载"></a>安装Rclone进行挂载</h1><h2 id="安装rclone"><a href="#安装rclone" class="headerlink" title="安装rclone"></a>安装rclone</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://rclone.org/install.sh | sudo bash</span><br></pre></td></tr></table></figure>
+<h2 id="配置rclone"><a href="#配置rclone" class="headerlink" title="配置rclone"></a>配置rclone</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br></pre></td><td class="code"><pre><span class="line">rclone config</span><br><span class="line">[root@localhost yum.repos.d]# rclone config</span><br><span class="line">2021/08/12 16:28:35 NOTICE: Config file &quot;/root/.config/rclone/rclone.conf&quot; not found - using defaults</span><br><span class="line">No remotes found - make a new one</span><br><span class="line">n) New remote</span><br><span class="line">s) Set configuration password</span><br><span class="line">q) Quit config</span><br><span class="line">n/s/q&gt; n</span><br><span class="line">name&gt; aliyunwebdav</span><br><span class="line">Type of storage to configure.</span><br><span class="line">Enter a string value. Press Enter for the default (&quot;&quot;).</span><br><span class="line">Choose a number from below, or type in your own value</span><br><span class="line"> 1 / 1Fichier</span><br><span class="line">   \ &quot;fichier&quot;</span><br><span class="line"> 2 / Alias for an existing remote</span><br><span class="line">   \ &quot;alias&quot;</span><br><span class="line"> 3 / Amazon Drive</span><br><span class="line">   \ &quot;amazon cloud drive&quot;</span><br><span class="line"> 4 / Amazon S3 Compliant Storage Providers including AWS, Alibaba, Ceph, Digital Ocean, Dreamhost, IBM COS, Minio, SeaweedFS, and Tencent COS</span><br><span class="line">   \ &quot;s3&quot;</span><br><span class="line"> 5 / Backblaze B2</span><br><span class="line">   \ &quot;b2&quot;</span><br><span class="line"> 6 / Box</span><br><span class="line">   \ &quot;box&quot;</span><br><span class="line"> 7 / Cache a remote</span><br><span class="line">   \ &quot;cache&quot;</span><br><span class="line"> 8 / Citrix Sharefile</span><br><span class="line">   \ &quot;sharefile&quot;</span><br><span class="line"> 9 / Compress a remote</span><br><span class="line">   \ &quot;compress&quot;</span><br><span class="line">10 / Dropbox</span><br><span class="line">   \ &quot;dropbox&quot;</span><br><span class="line">11 / Encrypt/Decrypt a remote</span><br><span class="line">   \ &quot;crypt&quot;</span><br><span class="line">12 / Enterprise File Fabric</span><br><span class="line">   \ &quot;filefabric&quot;</span><br><span class="line">13 / FTP Connection</span><br><span class="line">   \ &quot;ftp&quot;</span><br><span class="line">14 / Google Cloud Storage (this is not Google Drive)</span><br><span class="line">   \ &quot;google cloud storage&quot;</span><br><span class="line">15 / Google Drive</span><br><span class="line">   \ &quot;drive&quot;</span><br><span class="line">16 / Google Photos</span><br><span class="line">   \ &quot;google photos&quot;</span><br><span class="line">17 / Hadoop distributed file system</span><br><span class="line">   \ &quot;hdfs&quot;</span><br><span class="line">18 / Hubic</span><br><span class="line">   \ &quot;hubic&quot;</span><br><span class="line">19 / In memory object storage system.</span><br><span class="line">   \ &quot;memory&quot;</span><br><span class="line">20 / Jottacloud</span><br><span class="line">   \ &quot;jottacloud&quot;</span><br><span class="line">21 / Koofr</span><br><span class="line">   \ &quot;koofr&quot;</span><br><span class="line">22 / Local Disk</span><br><span class="line">   \ &quot;local&quot;</span><br><span class="line">23 / Mail.ru Cloud</span><br><span class="line">   \ &quot;mailru&quot;</span><br><span class="line">24 / Mega</span><br><span class="line">   \ &quot;mega&quot;</span><br><span class="line">25 / Microsoft Azure Blob Storage</span><br><span class="line">   \ &quot;azureblob&quot;</span><br><span class="line">26 / Microsoft OneDrive</span><br><span class="line">   \ &quot;onedrive&quot;</span><br><span class="line">27 / OpenDrive</span><br><span class="line">   \ &quot;opendrive&quot;</span><br><span class="line">28 / OpenStack Swift (Rackspace Cloud Files, Memset Memstore, OVH)</span><br><span class="line">   \ &quot;swift&quot;</span><br><span class="line">29 / Pcloud</span><br><span class="line">   \ &quot;pcloud&quot;</span><br><span class="line">30 / Put.io</span><br><span class="line">   \ &quot;putio&quot;</span><br><span class="line">31 / QingCloud Object Storage</span><br><span class="line">   \ &quot;qingstor&quot;</span><br><span class="line">32 / SSH/SFTP Connection</span><br><span class="line">   \ &quot;sftp&quot;</span><br><span class="line">33 / Sugarsync</span><br><span class="line">   \ &quot;sugarsync&quot;</span><br><span class="line">34 / Tardigrade Decentralized Cloud Storage</span><br><span class="line">   \ &quot;tardigrade&quot;</span><br><span class="line">35 / Transparently chunk/split large files</span><br><span class="line">   \ &quot;chunker&quot;</span><br><span class="line">36 / Union merges the contents of several upstream fs</span><br><span class="line">   \ &quot;union&quot;</span><br><span class="line">37 / Uptobox</span><br><span class="line">   \ &quot;uptobox&quot;</span><br><span class="line">38 / Webdav</span><br><span class="line">   \ &quot;webdav&quot;</span><br><span class="line">39 / Yandex Disk</span><br><span class="line">   \ &quot;yandex&quot;</span><br><span class="line">40 / Zoho</span><br><span class="line">   \ &quot;zoho&quot;</span><br><span class="line">41 / http Connection</span><br><span class="line">   \ &quot;http&quot;</span><br><span class="line">42 / premiumize.me</span><br><span class="line">   \ &quot;premiumizeme&quot;</span><br><span class="line">43 / seafile</span><br><span class="line">   \ &quot;seafile&quot;</span><br><span class="line">Storage&gt; 38</span><br><span class="line">URL of http host to connect to</span><br><span class="line">Enter a string value. Press Enter for the default (&quot;&quot;).</span><br><span class="line">Choose a number from below, or type in your own value</span><br><span class="line"> 1 / Connect to example.com</span><br><span class="line">   \ &quot;https://example.com&quot;</span><br><span class="line">url&gt; http://127.0.0.1:8080</span><br><span class="line">Name of the Webdav site/service/software you are using</span><br><span class="line">Enter a string value. Press Enter for the default (&quot;&quot;).</span><br><span class="line">Choose a number from below, or type in your own value</span><br><span class="line"> 1 / Nextcloud</span><br><span class="line">   \ &quot;nextcloud&quot;</span><br><span class="line"> 2 / Owncloud</span><br><span class="line">   \ &quot;owncloud&quot;</span><br><span class="line"> 3 / Sharepoint Online, authenticated by Microsoft account.</span><br><span class="line">   \ &quot;sharepoint&quot;</span><br><span class="line"> 4 / Sharepoint with NTLM authentication. Usually self-hosted or on-premises.</span><br><span class="line">   \ &quot;sharepoint-ntlm&quot;</span><br><span class="line"> 5 / Other site/service or software</span><br><span class="line">   \ &quot;other&quot;</span><br><span class="line">vendor&gt; 5</span><br><span class="line">User name. In case NTLM authentication is used, the username should be in the format &apos;Domain\User&apos;.</span><br><span class="line">Enter a string value. Press Enter for the default (&quot;&quot;).</span><br><span class="line">user&gt; admin</span><br><span class="line">Password.</span><br><span class="line">y) Yes type in my own password</span><br><span class="line">g) Generate random password</span><br><span class="line">n) No leave this optional password blank (default)</span><br><span class="line">y/g/n&gt; y</span><br><span class="line">Enter the password:</span><br><span class="line">password:</span><br><span class="line">Confirm the password:</span><br><span class="line">password:</span><br><span class="line">Bearer token instead of user/pass (e.g. a Macaroon)</span><br><span class="line">Enter a string value. Press Enter for the default (&quot;&quot;).</span><br><span class="line">bearer_token&gt; </span><br><span class="line">Edit advanced config?</span><br><span class="line">y) Yes</span><br><span class="line">n) No (default)</span><br><span class="line">y/n&gt; </span><br><span class="line">--------------------</span><br><span class="line">[aliyunwebdav]</span><br><span class="line">type = webdav</span><br><span class="line">url = http://127.0.0.1:8080</span><br><span class="line">vendor = other</span><br><span class="line">user = admin</span><br><span class="line">pass = *** ENCRYPTED ***</span><br><span class="line">--------------------</span><br><span class="line">y) Yes this is OK (default)</span><br><span class="line">e) Edit this remote</span><br><span class="line">d) Delete this remote</span><br><span class="line">y/e/d&gt; </span><br><span class="line">Current remotes:</span><br><span class="line"></span><br><span class="line">Name                 Type</span><br><span class="line">====                 ====</span><br><span class="line">aliyunwebdav         webdav</span><br><span class="line"></span><br><span class="line">e) Edit existing remote</span><br><span class="line">n) New remote</span><br><span class="line">d) Delete remote</span><br><span class="line">r) Rename remote</span><br><span class="line">c) Copy remote</span><br><span class="line">s) Set configuration password</span><br><span class="line">q) Quit config</span><br><span class="line">e/n/d/r/c/s/q&gt;  q</span><br></pre></td></tr></table></figure>
+<h2 id="挂载到本地linux"><a href="#挂载到本地linux" class="headerlink" title="挂载到本地linux"></a>挂载到本地linux</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#新建本地文件夹,位置可以自己选</span><br><span class="line">mkdir /data/aliyunwebdav</span><br><span class="line">#挂载</span><br><span class="line">rclone mount DriveName:Folder LocalFolder --cache-dir /tmp --allow-other --vfs-cache-mode writes --allow-non-empty</span><br><span class="line"></span><br><span class="line">DriverName是你在配置rclone的时候设置的名字,Folder没有需要求的话填/即可,LocalFolder是你本地挂载的地址,/tmp比较特殊,上传时缓存目录,其他类型挂载一般时不需要这个参数的,默认/tmp地址即可,除非你的系统特殊</span><br></pre></td></tr></table></figure>
+<h2 id="设置开机自启"><a href="#设置开机自启" class="headerlink" title="设置开机自启"></a>设置开机自启</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#将后面修改成你上面手动运行命令中，除了rclone的全部参数</span><br><span class="line">command=&quot;mount DriveName:Folder LocalFolder --cache-dir /tmp --allow-other --vfs-cache-mode writes --allow-non-empty&quot;</span><br><span class="line">#以下是一整条命令，一起复制到SSH客户端运行</span><br><span class="line">cat &gt; /etc/systemd/system/rclone.service &lt;&lt;EOF</span><br><span class="line">[Unit]</span><br><span class="line">Description=Rclone</span><br><span class="line">After=network-online.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">ExecStart=$(command -v rclone) $&#123;command&#125;</span><br><span class="line">Restart=on-abort</span><br><span class="line">User=root</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=default.target</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">重启：systemctl restart rclone</span><br><span class="line">停止：systemctl stop rclone</span><br><span class="line">状态：systemctl status rclone</span><br></pre></td></tr></table></figure>
+<h2 id="windwos"><a href="#windwos" class="headerlink" title="windwos"></a>windwos</h2><p>新建两个文件，分别为<code>rclone.bat</code>和<code>rclone.vbs</code></p>
+<ol>
+<li><p><code>rclone.bat</code>中写入上述挂载命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rclone mount onedrive:/ E: --cache-dir D:\Onedrive --vfs-cache-mode writes &amp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>rclone.vbs设置开机自动调用cmd运行rclone.bat文件并退出cmd，写入如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CreateObject(&quot;WScript.Shell&quot;).Run &quot;cmd /c D:/rclone.bat&quot;,0</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>将rclone.bat文件放到D盘（或其他的盘）目录下，我放在了D盘，所以在rclone.vbs中该文件的路径就是D:/rclone.bat</p>
+<p>将rclone.vbs文件放到windows系统启动项目录下，在文件夹的路径框中输入<br><code>%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</code><br>即可进入启动项目录</p>
+
+          
         
       
     </div>
@@ -566,12 +729,24 @@
                 
               
 
-              <time title="创建时间：2021-09-23 15:10:18 / 修改时间：15:17:07" itemprop="dateCreated datePublished" datetime="2021-09-23T15:10:18+08:00">2021-09-23</time>
+              <time title="创建时间：2021-09-23 15:10:18" itemprop="dateCreated datePublished" datetime="2021-09-23T15:10:18+08:00">2021-09-23</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -800,7 +975,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -1000,7 +1175,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -1155,7 +1330,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -1312,7 +1487,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -1471,7 +1646,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -1636,7 +1811,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -1807,7 +1982,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-28 14:05:15" itemprop="dateModified" datetime="2021-09-28T14:05:15+08:00">2021-09-28</time>
               
             
           </span>
@@ -1852,161 +2027,6 @@
 <p>config-lite是一个轻量的读取配置文件的模块。config-lite 会根据环境变量（NODE_ENV）的不同从当前执行进程目录下的 config 目录加载不同的配置文件。如果不设置NODE_ENV，则读取默认的 default 配置文件，如果设置了NODE_ENV，则会合并指定的配置文件和 default 配置文件作为配置，config-lite 支持 .js、.json、.node、.yml、.yaml 后缀的文件。</p>
 <p>如果程序以NODE_ENV=test node app启动，则通过require(‘config-lite’)会依次降级查找config/test.js、config/test.json、config/test.node、config/test.yml、config/test.yaml并合并 default 配置;</p>
 <p>如果程序以NODE_ENV=production node app启动，则通过require(‘config-lite’)会依次降级查找config/production.js、config/production.json、config/production.node、config/production.yml、config/production.yaml并合并 default 配置。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://mibb005.github.io/2019/11/14/grpc-md/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="mibb005">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/ss.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mibb005">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/11/14/grpc-md/" class="post-title-link" itemprop="url">gRPC 官方文档中文版</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-11-14 11:23:02" itemprop="dateCreated datePublished" datetime="2019-11-14T11:23:02+08:00">2019-11-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2021-09-23 15:17:07" itemprop="dateModified" datetime="2021-09-23T15:17:07+08:00">2021-09-23</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-    
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://doc.oschina.net/grpc?t=58010" target="_blank" rel="noopener">http://doc.oschina.net/grpc?t=58010</a></p>
 
           
         
@@ -2100,7 +2120,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">68</span>
+                    <span class="site-state-item-count">69</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
